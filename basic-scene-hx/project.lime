@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+    <meta title="ThreeHX - Wire Cube" package="com.threehx.wirecube" version="1.0.0" company="ThreeHX" />
+    <app main="Main" path="Export" file="Main" />
+
+    <source path="./Source" />
+    <source path="../threehx" />
+
+    <haxelib name="lime" />
+    <haxelib name="foo3d" />
+
+</project>

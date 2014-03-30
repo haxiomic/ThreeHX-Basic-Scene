@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+		body{padding: 0;margin: 0;}
+		</style>
+	</head>
+	<body>
+		<script src="../three.js/src/Three.js"></script>
+
+				<script src="../three.js/src/math/Math.js"></script>
+				<script src="../three.js/src/math/Vector2.js"></script>
+				<script src="../three.js/src/math/Vector3.js"></script>
+				<script src="../three.js/src/math/Vector4.js"></script>
+				<script src="../three.js/src/math/Matrix3.js"></script>
+				<script src="../three.js/src/math/Matrix4.js"></script>
+				<script src="../three.js/src/math/Box3.js"></script>
+				<script src="../three.js/src/math/Sphere.js"></script>
+				<script src="../three.js/src/math/Color.js"></script>
+				<script src="../three.js/src/math/Quaternion.js"></script>
+				<script src="../three.js/src/math/Frustum.js"></script>
+				<script src="../three.js/src/math/Plane.js"></script>
+				<script src="../three.js/src/math/Euler.js"></script>
+
+				<script src="../three.js/src/core/EventDispatcher.js"></script>
+				<script src="../three.js/src/core/Geometry.js"></script>
+				<script src="../three.js/src/core/Face3.js"></script>
+
+			<script src="../three.js/src/core/Object3D.js"></script>
+			<script src="../three.js/src/lights/Light.js"></script>
+			<script src="../three.js/src/objects/Bone.js"></script>
+		<script src="../three.js/src/scenes/Scene.js"></script>
+
+			<script src="../three.js/src/cameras/Camera.js"></script>
+		<script src="../three.js/src/cameras/PerspectiveCamera.js"></script>
+
+		<script src="../three.js/src/extras/geometries/BoxGeometry.js"></script>
+
+			<script src="../three.js/src/materials/Material.js"></script>
+		<script src="../three.js/src/materials/MeshBasicMaterial.js"></script>
+
+		<script src="../three.js/src/objects/Mesh.js"></script>
+
+		<!-- Includes practically everything! -->
+		<script src="../three.js/build/three.js"></script>
+		<script src="../three.js/src/renderers/WebGLRenderer.js"></script>
+
+		<script type="text/javascript">
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+
+			init();
+			animate();
+
+			function init() {
+			    scene = new THREE.Scene();
+
+			    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+			    camera.position.z = 1000;
+
+			    geometry = new THREE.BoxGeometry(200, 200, 200);
+			    material = new THREE.MeshBasicMaterial({
+			        color: 0xff0000,
+			        wireframe: true
+			    });
+
+			    mesh = new THREE.Mesh(geometry, material);
+			    scene.add(mesh);
+
+			    renderer = new THREE.WebGLRenderer();
+			    renderer.setSize(window.innerWidth, window.innerHeight);
+
+			    document.body.appendChild(renderer.domElement);
+			}
+
+			function animate() {
+			    // note: three.js includes requestAnimationFrame shim
+			    requestAnimationFrame(animate);
+
+			    mesh.rotation.x += 0.01;
+			    mesh.rotation.y += 0.02;
+
+			    renderer.render(scene, camera);
+			}
+		</script>
+	</body>
+</html>
