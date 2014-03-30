@@ -1,3 +1,4 @@
+//R66
 package three.math;
 
 import three.math.TMath;
@@ -59,14 +60,12 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function multiplyVector3 (v:Vector3) : Vector3
-	{
+	public function multiplyVector3 (v:Vector3) : Vector3{
 		return v.applyMatrix3(this);
 	}
 
 
-	public function multiplyVector3Array (a:Array<Float>) : Array<Float>
-	{
+	public function multiplyVector3Array (a:Array<Float>) : Array<Float>{
 		var v1 = new Vector3();
 		var i = 0, il = a.length;
 		while (i < il)
@@ -85,8 +84,7 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function multiplyScalar (s:Float) : Matrix3
-	{
+	public function multiplyScalar (s:Float) : Matrix3{
 		this[0] *= s; this[3] *= s; this[6] *= s;
 		this[1] *= s; this[4] *= s; this[7] *= s;
 		this[2] *= s; this[5] *= s; this[8] *= s;
@@ -94,8 +92,7 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function determinant () : Float
-	{
+	public function determinant () : Float{
 		var a = this[0], b = this[1], c = this[2];
 		var d = this[3], e = this[4], f = this[5];
 		var g = this[6], h = this[7], i = this[8];
@@ -103,8 +100,7 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function getInverse (m:Matrix4) : Matrix3
-	{
+	public function getInverse (m:Matrix4) : Matrix3{
 		var me = m.elements;
 		var te = elements;
 		this[0] =  m[10] * m[5] - m[6] * m[9];
@@ -131,8 +127,7 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function transpose () : Matrix3
-	{
+	public function transpose () : Matrix3{
 		var tmp:Float;
 		tmp = this[1]; this[1] = this[3]; this[3] = tmp;
 		tmp = this[2]; this[2] = this[6]; this[6] = tmp;
@@ -141,14 +136,12 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 	
 	
-	public function getNormalMatrix (m:Matrix4) : Matrix3
-	{
+	public function getNormalMatrix (m:Matrix4) : Matrix3{
 		return getInverse(m).transpose();
 	}
 	
 	
-	public function transposeIntoArray (r:Array<Float>) : Matrix3
-	{
+	public function transposeIntoArray (r:Array<Float>) : Matrix3{
 		r[0] = this[0];
 		r[1] = this[3];
 		r[2] = this[6];
@@ -162,8 +155,7 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 	}
 
 
-	public function clone () : Matrix3
-	{
+	public function clone () : Matrix3{
 		return new Matrix3(
 			this[0], this[3], this[6],
 			this[1], this[4], this[7],
