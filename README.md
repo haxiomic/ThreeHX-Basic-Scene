@@ -33,9 +33,9 @@ Also three.js->c++, very useful for type information
 ###Files touched in the basic scene, roughly in order
 Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :) . Not all are actually used, but all are referenced in the basic-scene. 
 
-- **Three.js**
-- math/**Math.js**
-- math/**Vector2.js**
+- ~~**Three.js**~~
+- ~~math/**Math.js**~~
+- ~~math/**Vector2.js**~~
 - math/**Vector3.js**
 - math/**Vector4.js**
 - math/**Matrix3.js**
