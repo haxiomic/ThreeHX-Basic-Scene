@@ -1,4 +1,4 @@
-##Let's get three.js ported to Haxe!
+##Let's get [three.js](https://github.com/mrdoob/three.js/) ported to Haxe!
 The current approach is to port just enough to run the most basic scene, this will allow us to test design considerations and ensure that the foundations are tested and rock solid. This initial attempt will aim to run a very basic scene in GL, Flash and Canvas, however further development will focus on GL alone
 
 ###Design Considerations
