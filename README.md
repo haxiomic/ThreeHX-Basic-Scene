@@ -5,21 +5,21 @@ The current approach is to port just enough to run the most basic scene, this wi
 - In three.js the renderer adds additional fields to objects, in haxe, this means objects have to be predefined with renderer specific fields. These fields should either be stored elsewhere or be define in a general, renderer agonistic manner on the object.
 `Use foo3d as the interface to the renderer?`
 - Easy upgrade path: needs to map well onto threejs codebase
-`functions should be tagged with revision they were ported from?`
+`functions should be tagged with revision they were ported from`
 - Port three.js tests
 
 ###Getting Involved
 Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.git` to clone the repo including the three.js submodule
 
-The current ThreeHX library is in the ./threehx folder and the basic test scene is in ./basic-scene-hx, to build `cd basic-scene-hx` and execute `lime test html5`
+The current ThreeHX library is in the ./threehx folder and the basic test scene is in ./basic-scene-hx, to build: `cd basic-scene-hx` and execute `lime test html5`
 
-Mark todos or other important comments with a '#!' eg `//#! this bit needs finishing`, this makes them searchable later on.
+Mark todos or other important comments with a '#!' e.g. `//#! this bit needs finishing`, this makes them searchable later on.
 
 If a file is incomplete, please put what you've done and what needs to be done at the top.
 
-Mark the revision the file was ported from at the top eg: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
+Mark the revision the file was ported from at the top e.g.: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
 
-Other three.js->hx porting projects, although incomplete, be sure to check them out!
+Other three.js->hx porting projects, be sure to check them out!
 [https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  
 [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX)  
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)
@@ -63,7 +63,7 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 #Complete
 
 - **Three.hx**
-- math/**Math.hx**
+- math/**TMath.hx**
 - math/**Vector2.hx**
 
 #Incomplete 
