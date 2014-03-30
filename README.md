@@ -1,5 +1,5 @@
 ##Let's get [three.js](https://github.com/mrdoob/three.js/) ported to Haxe!
-The current approach is to port just enough to run the most basic scene, this will allow us to test design considerations and ensure that the foundations are tested and rock solid. This initial attempt will aim to run a very basic scene in GL, Flash and Canvas, however further development will focus on GL alone
+The current approach is to port just enough to run the most basic scene, this will allow us to test design considerations and ensure that the foundations are rock solid for future development. This initial attempt will aim to run a very basic scene in GL, Flash and Canvas, however further development will focus on GL alone
 
 ###Design Considerations
 - In three.js the renderer adds additional fields to objects, in haxe, this means objects have to be predefined with renderer specific fields. These fields should either be stored elsewhere or be define in a general, renderer agonistic manner on the object.
