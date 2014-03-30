@@ -70,10 +70,7 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 - **Three.hx**
 - math/**TMath.hx**
 - math/**Vector2.hx**
-- math/**Vector3.js**
-- math/**Vector4.js**
 - math/**Matrix3.js**
-- math/**Matrix4.js**
 
 #Incomplete 
 
