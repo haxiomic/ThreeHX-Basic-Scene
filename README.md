@@ -30,6 +30,9 @@ Also three.js->c++, very useful for type information
 ###Important notes
 - math.Math has become math.TMath to avoid conflict with standard Math lib
 
+###Todo
+- Math abstract classes should not use taurine, or if they do, base on Single instead
+
 ###Files touched in the basic scene, roughly in order
 Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :) . Not all are actually used, but all are referenced in the basic-scene. 
 
