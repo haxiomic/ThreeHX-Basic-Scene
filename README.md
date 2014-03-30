@@ -9,7 +9,7 @@ The current approach is to port just enough to run the most basic scene, this wi
 - Port three.js tests
 
 ###Getting Involved
-Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.git` to clone the repo including three.js  
+Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.git` to clone the repo including the three.js submodule
 
 The current ThreeHX library is in the ./threehx folder and the basic test scene is in ./basic-scene-hx, to build `cd basic-scene-hx` and execute `lime test html5`
 
@@ -28,7 +28,7 @@ Other three.js->hx porting projects, although incomplete, be sure to check them 
 - math.Math has become three.math.TMath to avoid conflict with standard Math lib
 
 ###Files touched in the basic scene, roughly in order
-Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :)
+Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :) . Not all are actually used, but all are referenced in the basic-scene. 
 
 - **Three.js**
 - math/**Math.js**
