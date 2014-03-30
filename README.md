@@ -68,7 +68,7 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 #Complete
 
 - **Three.hx**
-- math/**TMath.hx**
+- math/**MathUtils.hx**
 - math/**Vector2.hx**
 - math/**Matrix3.js**
 

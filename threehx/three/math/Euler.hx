@@ -2,8 +2,8 @@ package three.math;
 
 class Euler{
 	public function new(x:Float = 0, y:Float = 0, z:Float = 0, order:String = DefaultOrder){
-		this.order = order;
 		v3 = new Vector3(x,y,z);
+		this.order = order;
 	}
 
 	private var v3:Vector3;
