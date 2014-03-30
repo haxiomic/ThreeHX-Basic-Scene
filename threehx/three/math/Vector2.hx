@@ -1,108 +1,120 @@
-//R66
-/* Credit to waneck / taurine-hx for design */	
+//R66	
 package three.math;
-import taurine.math.Vec2;
 
-typedef Vector2Data = Vec2;
+@:noCompletion
+@:arrayAccess
+abstract Vector2Data(FloatArray) to FloatArray from FloatArray{
+	public inline function new(x:Float = 0, y:Float = 0){
+		this = new FloatArray(2);
+		this[0] = x;
+		this[1] = y;
+	}
+	public var x(get,set):Float;
+	public var y(get,set):Float;
+	private inline function get_x():Float return this[0];
+	private inline function get_y():Float return this[1];
+	private inline function set_x(val:Float):Float return this[0] = val;
+	private inline function set_y(val:Float):Float return this[1] = val;
+}
 
 @:arrayAccess
 abstract Vector2(Vector2Data) to Vector2Data from Vector2Data
 {
-	public var x(get,set):Float;
-	public var y(get,set):Float;
-
 	public inline function new(x:Float = 0, y:Float = 0){
 		this = new Vector2Data(x,y);
 	}
+	public var x(get,set):Float;
+	public var y(get,set):Float;
+	private inline function get_x():Float return this.x;
+	private inline function get_y():Float return this.y;
+	private inline function set_x(val:Float):Float return this.x = val;
+	private inline function set_y(val:Float):Float return this.y = val;
 
-	private inline function get_x():Float return this[0];
-	private inline function set_x(val:Float):Float return this[0] = val;
-	private inline function get_y():Float return this[1];
-	private inline function set_y(val:Float):Float return this[1] = val;
+	public inline function toString() return "Vector2("+x+", "+y+")";
 
-	// three.js Vector2 methods
+	// three.js methods
 
 	public inline function set(x:Float, y:Float):Vector2{
-		this.x = x;
-		this.y = y;
+		this[0] = x;
+		this[1] = y;
 		return this;
 	}
 
 
 	public inline function setX( x:Float ):Vector2 {
-		this.x = x;
+		this[0] = x;
 		return this;
 	}
 
 
 	public inline function setY( y:Float ):Vector2 {
-		this.y = y;
+		this[1] = y;
 		return this;
 	}
 
 
 	public inline function setComponent( index:Int, value:Float ):Void {
 		switch ( index ) {
-			case 0: this.x = value;
-			case 1: this.y = value;
+			case 0: this[0] = value;
+			case 1: this[1] = value;
 		}
 	}
 
 	
 	public inline function getComponent( index:Int ):Float {
 		switch ( index ) {
-			case 0: return this.x;
-			case 1: return this.y;
+			case 0: return this[0];
+			case 1: return this[1];
 		}
 		return 0;
 	}
 
 
 	public inline function copy( v:Vector2 ):Vector2 {
-		this.x = v.x;
-		this.y = v.y;
+		this[0] = v.x;
+		this[1] = v.y;
 		return this;
 	}
 
 
 	public inline function add( v:Vector2 ):Vector2{
-		this.x += v.x;
-		this.y += v.y;
+		this[0] += v.x;
+		this[1] += v.y;
 		return this;
 	}
 
 
 	public inline function addVectors( a:Vector2, b:Vector2 ):Vector2 {
-		this.x = a.x + b.x;
-		this.y = a.y + b.y;
+		this[0] = a.x + b.x;
+		this[1] = a.y + b.y;
 		return this;
 	}
 
 
 	public inline function addScalar( s:Float ):Vector2 {
-		this.x += s;
-		this.y += s;
+		this[0] += s;
+		this[1] += s;
 		return this;
 	}
 
 
 	public inline function sub( v:Vector2 ):Vector2 {
-		this.x -= v.x;
-		this.y -= v.y;
+		this[0] -= v.x;
+		this[1] -= v.y;
 		return this;
 	}
 
 
 	public inline function subVectors( a:Vector2, b:Vector2 ):Vector2 {
-		this.x = a.x - b.x;
-		this.y = a.y - b.y;
+		this[0] = a.x - b.x;
+		this[1] = a.y - b.y;
 		return this;
 	}
 
 
 	public inline function multiplyScalar( s:Float ) {
-		this.x *= s;
-		this.y *= s;
+		this[0] *= s;
+		this[1] *= s;
 		return this;
 	}
 

@@ -1,10 +1,10 @@
 //R66
 /*
-Changed from Math to TMath to avoid conflict
+Changed from Math to MathUtils to avoid conflict
 */
 package three.math;
 
-class TMath{
+class MathUtils{
 	public static var PI2:Float = Math.PI*2;
 
 	static var chars:Array<String> = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');

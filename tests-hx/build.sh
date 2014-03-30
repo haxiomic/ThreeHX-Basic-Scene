@@ -1,5 +1,54 @@
-haxe build.hxml 
-echo -e "-- node --"
-node main.js
-echo -e "\n-- cpp --"
-./cpp/Main
+echo -e "${BLUE} -- JS --${RESET}"
+if haxe buildjs.hxml; then
+	node main.js
+else
+	echo -e "${RED}${BOLD} -- JS Failed --${RESET}"
+fi
+
+echo -e "\n${BLUE} -- C++ -- ${RESET}"
+if haxe buildcpp.hxml; then
+	./cpp/Main
+else
+	echo -e "${RED}${BOLD} -- C++ Failed --${RESET}"
+fi
+
+
+
+
+#terminal colors
+BLACK_CODE=0
+RED_CODE=1
+GREEN_CODE=2
+YELLOW_CODE=3
+BLUE_CODE=4
+MAGENTA_CODE=5
+CYAN_CODE=6
+WHITE_CODE=7
+BRIGHT_BLACK_CODE=8
+BRIGHT_RED_CODE=9
+BRIGHT_GREEN_CODE=10
+BRIGHT_YELLOW_CODE=11
+BRIGHT_BLUE_CODE=12
+BRIGHT_MAGENTA_CODE=13
+BRIGHT_CYAN_CODE=14
+BRIGHT_WHITE_CODE=15
+
+BLACK='\033[38;5;'$BLACK_CODE'm'  
+RED='\033[38;5;'$RED_CODE'm'    
+GREEN='\033[38;5;'$GREEN_CODE'm'  
+YELLOW='\033[38;5;'$YELLOW_CODE'm' 
+BLUE='\033[38;5;'$BLUE_CODE'm'   
+MAGENTA='\033[38;5;'$MAGENTA_CODE'm'
+CYAN='\033[38;5;'$CYAN_CODE'm'   
+WHITE='\033[38;5;'$WHITE_CODE'm'
+BRIGHT_BLACK='\033[38;5;'$BRIGHT_BLACK_CODE'm'  
+BRIGHT_RED='\033[38;5;'$BRIGHT_RED_CODE'm'    
+BRIGHT_GREEN='\033[38;5;'$BRIGHT_GREEN_CODE'm'  
+BRIGHT_YELLOW='\033[38;5;'$BRIGHT_YELLOW_CODE'm' 
+BRIGHT_BLUE='\033[38;5;'$BRIGHT_BLUE_CODE'm'   
+BRIGHT_MAGENTA='\033[38;5;'$BRIGHT_MAGENTA_CODE'm'
+BRIGHT_CYAN='\033[38;5;'$BRIGHT_CYAN_CODE'm'   
+BRIGHT_WHITE='\033[38;5;'$BRIGHT_WHITE_CODE'm'
+
+BOLD='\033[1m'
+RESET='\033[m'

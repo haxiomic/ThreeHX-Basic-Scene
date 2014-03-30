@@ -4,8 +4,3 @@
 -main Main
 -js main.js
 -cp ../threehx
-
---next
--main Main
--cpp cpp
--cp ../threehx

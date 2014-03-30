@@ -1,6 +1,8 @@
 ##Let's get [three.js](https://github.com/mrdoob/three.js/) ported to Haxe!
 The current approach is to port just enough to run the most basic scene, this will allow us to test design considerations and ensure that the foundations are rock solid for future development. This initial attempt will aim to run a very basic scene in GL, Flash and Canvas, however further development will focus on GL alone
 
+Much of the code is based on eskojones's [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX) which is an excellent port of the base classes
+
 ###Design Considerations
 - In three.js the renderer adds additional fields to objects, in haxe, this means objects have to be predefined with renderer specific fields. These fields should either be stored elsewhere or be define in a general, renderer agonistic manner on the object.
 `Use foo3d as the interface to the renderer?`
@@ -13,25 +15,22 @@ Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.g
 
 The current ThreeHX library is in the ./threehx folder and the basic test scene is in ./basic-scene-hx, to build: `cd basic-scene-hx` and execute `lime test html5`
 
-Mark todos or other important comments with a '#!' e.g. `//#! this bit needs finishing`, this makes them searchable later on.
+Mark todos or other important comments with a '!#' e.g. `//!# this bit needs finishing`, this makes them searchable later on.
 
 If a file is incomplete, please put what you've done and what needs to be done at the top.
 
 Mark the revision the file was ported from at the top e.g.: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
 
-Other three.js->hx porting projects, be sure to check them out!  
-[https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  
+Other three.js->hx porting projects  
 [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX)  
+[https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  (Fork of eskojones with more GLRender code)
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)
 
 Also three.js->c++, very useful for type information  
 [https://github.com/jdduke/three_cpp](https://github.com/jdduke/three_cpp)
 
 ###Important notes
-- math.Math has become math.TMath to avoid conflict with standard Math lib
-
-###Todo
-- Math abstract classes should not use taurine, or if they do, base on Single instead
+- math.Math has become math.MathUtils to avoid conflict with standard Math lib
 
 ###Files touched in the basic scene, roughly in order
 Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :) . Not all are actually used, but all are referenced in the basic-scene. 
@@ -39,17 +38,17 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 - ~~**Three.js**~~
 - ~~math/**Math.js**~~
 - ~~math/**Vector2.js**~~
-- math/**Vector3.js**
-- math/**Vector4.js**
-- math/**Matrix3.js**
-- math/**Matrix4.js**
+- math/**Vector3.js** *
+- math/**Vector4.js** *
+- ~~math/**Matrix3.js**~~
+- math/**Matrix4.js** *
 - math/**Box3.js**
 - math/**Sphere.js**
 - math/**Color.js**
-- math/**Quaternion.js**
+- math/**Quaternion.js** *
 - math/**Frustum.js**
 - math/**Plane.js**
-- math/**Euler.js**
+- math/**Euler.js** *
 - core/**EventDispatcher.js**
 - core/**Geometry.js**
 - core/**Face3.js**
@@ -71,6 +70,10 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 - **Three.hx**
 - math/**TMath.hx**
 - math/**Vector2.hx**
+- math/**Vector3.js**
+- math/**Vector4.js**
+- math/**Matrix3.js**
+- math/**Matrix4.js**
 
 #Incomplete 
 
@@ -164,8 +167,5 @@ Excluding the WebGLRenderer dependancies because it accesses everything! If you'
 - renderers/renderables/**RenderableObject.hx**
 - renderers/renderables/**RenderableSprite.hx**
 - renderers/renderables/**RenderableLine.hx**
-
-### Unessential TODOs
-- Create trimmed down implementation of waneck's taurine-hx vector classes so we're not bundling all of the library with threehx (see Vector2.hx classes)
 
 *Currently porting from r66*

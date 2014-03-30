@@ -1,32 +1,57 @@
 //R66
-/* Credit to waneck / taurine-hx for design */	
 package three.math;
 
-import three.math.TMath;
-import taurine.math.Vec3;
-
-typedef Vector3Data = Vec3;
+@:noCompletion
+@:arrayAccess
+abstract Vector3Data(FloatArray) to FloatArray from FloatArray{
+	public inline function new(x:Float = 0, y:Float = 0, z:Float = 0){
+		this = new FloatArray(3);
+		this[0] = x;
+		this[1] = y;
+		this[2] = z;
+	}
+	public var x(get,set):Float;
+	public var y(get,set):Float;
+	public var z(get,set):Float;
+	private inline function get_x():Float return this[0];
+	private inline function get_y():Float return this[1];
+	private inline function get_z():Float return this[2];
+	private inline function set_x(val:Float):Float return this[0] = val;
+	private inline function set_y(val:Float):Float return this[1] = val;
+	private inline function set_z(val:Float):Float return this[2] = val;
+}
 
 @:arrayAccess
 abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 {	
-	public var x(get,set):Float;
-	public var y(get,set):Float;
-
-	public inline function new(x:Float = 0, y:Float = 0, z:Float){
+	public inline function new(x:Float = 0, y:Float = 0, z:Float = 0){
 		this = new Vector3Data(x,y,z);
 	}
+	public var x(get,set):Float;
+	public var y(get,set):Float;
+	public var z(get,set):Float;
+	private inline function get_x():Float return this.x;
+	private inline function get_y():Float return this.y;
+	private inline function get_z():Float return this.z;
+	private inline function set_x(val:Float):Float return this.x = val;
+	private inline function set_y(val:Float):Float return this.y = val;
+	private inline function set_z(val:Float):Float return this.z = val;
 
-	private inline function get_x():Float return this[0];
-	private inline function set_x(val:Float):Float return this[0] = val;
-	private inline function get_y():Float return this[1];
-	private inline function set_y(val:Float):Float return this[1] = val;
-	private inline function get_z():Float return this[2];
-	private inline function set_z(val:Float):Float return this[2] = val;
+	public inline function toString() return "Vector3("+x+", "+y+", "+z+")";
 
 	// three.js Vector3 methods
 		
-	public function set (x:Float = 0, y:Float = 0, z:Float = 0) : Vector3{
+	public function copy (v:Vector3) : Vector3
+	{
+		x = v.x;
+		y = v.y;
+		z = v.z;
+		return this;
+	}
+	
+	
+	public function set (x:Float = 0, y:Float = 0, z:Float = 0) : Vector3
+	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -34,25 +59,29 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function setX (x:Float = 0) : Vector3{
+	public function setX (x:Float = 0) : Vector3
+	{
 		this.x = x;
 		return this;
 	}
 	
 	
-	public function setY (y:Float = 0) : Vector3{
+	public function setY (y:Float = 0) : Vector3
+	{
 		this.y = y;
 		return this;
 	}
 	
 	
-	public function setZ (z:Float = 0) : Vector3{
+	public function setZ (z:Float = 0) : Vector3
+	{
 		this.z = z;
 		return this;
 	}
 	
 	
-	public function setComponent (index:Int, value:Float) : Vector3{
+	public function setComponent (index:Int, value:Float) : Vector3
+	{
 		switch (index)
 		{
 			case 0: x = value;
@@ -63,8 +92,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 		return this;
 	}
 	
-
-	public function getComponent (index:Int) : Float{
+	public function getComponent (index:Int) : Float
+	{
 		switch (index)
 		{
 			case 0: return x;
@@ -76,16 +105,9 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 		}
 	}
 	
-
-	public function copy (v:Vector3) : Vector3{
-		x = v.x;
-		y = v.y;
-		z = v.z;
-		return this;
-	}
-
 	
-	public function add (v:Vector3) : Vector3{
+	public function add (v:Vector3) : Vector3
+	{
 		x += v.x;
 		y += v.y;
 		z += v.z;
@@ -93,7 +115,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function addScalar (s:Float) : Vector3{
+	public function addScalar (s:Float) : Vector3
+	{
 		x += s;
 		y += s;
 		z += s;
@@ -101,7 +124,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function addVectors (a:Vector3, b:Vector3) : Vector3{
+	public function addVectors (a:Vector3, b:Vector3) : Vector3
+	{
 		x = a.x + b.x;
 		y = a.y + b.y;
 		z = a.z + b.z;
@@ -109,7 +133,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function sub (v:Vector3) : Vector3{
+	public function sub (v:Vector3) : Vector3
+	{
 		x -= v.x;
 		y -= v.y;
 		z -= v.z;
@@ -117,7 +142,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function subVectors (a:Vector3, b:Vector3) : Vector3{
+	public function subVectors (a:Vector3, b:Vector3) : Vector3
+	{
 		x = a.x - b.x;
 		y = a.y - b.y;
 		z = a.z - b.z;
@@ -125,7 +151,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function multiply (v:Vector3) : Vector3{
+	public function multiply (v:Vector3) : Vector3
+	{
 		x *= v.x;
 		y *= v.y;
 		z *= v.z;
@@ -133,7 +160,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function multiplyScalar (s:Float) : Vector3{
+	public function multiplyScalar (s:Float) : Vector3
+	{
 		x *= s;
 		y *= s;
 		z *= s;
@@ -141,7 +169,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function multiplyVectors (a:Vector3, b:Vector3) : Vector3{
+	public function multiplyVectors (a:Vector3, b:Vector3) : Vector3
+	{
 		x = a.x * b.x;
 		y = a.y * b.y;
 		z = a.z * b.z;
@@ -150,7 +179,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	
 
 	
-	public function divide (v:Vector3) : Vector3{
+	public function divide (v:Vector3) : Vector3
+	{
 		x /= v.x;
 		y /= v.y;
 		z /= v.z;
@@ -158,7 +188,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function divideScalar (s:Float) : Vector3{
+	public function divideScalar (s:Float) : Vector3
+	{
 		if (s == 0.0) return set(0, 0, 0);
 		x /= s;
 		y /= s;
@@ -167,7 +198,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function applyMatrix3 (m:Matrix3) : Vector3{
+	public function applyMatrix3 (m:Matrix3) : Vector3
+	{
 		var e = m.elements;
 		var x = this.x, y = this.y, z = this.z;
 		this.x = e[0] * x + e[3] * y + e[6] * z;
@@ -177,7 +209,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function applyMatrix4 (m:Matrix4) : Vector3{
+	public function applyMatrix4 (m:Matrix4) : Vector3
+	{
 		var e = m.elements;
 		var x = this.x, y = this.y, z = this.z;
 		this.x = e[0] * x + e[4] * y + e[8] * z + e[12];
@@ -187,7 +220,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function applyProjection (m:Matrix4) : Vector3{
+	public function applyProjection (m:Matrix4) : Vector3
+	{
 		var e = m.elements;
 		var x = this.x, y = this.y, z = this.z;
 		var d:Float = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
@@ -197,7 +231,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 		return this;
 	}
 	
-	public function applyQuaternion (q:Quaternion) : Vector3{
+	public function applyQuaternion (q:Quaternion) : Vector3
+	{
 		var qx = q.x;
 		var qy = q.y;
 		var qz = q.z;
@@ -214,7 +249,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 		return this;
 	}
 	
-	public function transformDirection (m:Matrix4) : Vector3{
+	public function transformDirection (m:Matrix4) : Vector3
+	{
 		var e = m.elements;
 		var x = this.x, y = this.y, z = this.z;
 		this.x = e[0] * x + e[4] * y + e[8] * z;
@@ -225,7 +261,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function min (v:Vector3) : Vector3{
+	public function min (v:Vector3) : Vector3
+	{
 		if (x > v.x) x = v.x;
 		if (y > v.y) y = v.y;
 		if (z > v.z) z = v.z;
@@ -233,7 +270,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function max (v:Vector3) : Vector3{
+	public function max (v:Vector3) : Vector3
+	{
 		if (x < v.x) x = v.x;
 		if (y < v.y) y = v.y;
 		if (z < v.z) z = v.z;
@@ -241,7 +279,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function clamp (vmin:Vector3, vmax:Vector3) : Vector3{
+	public function clamp (vmin:Vector3, vmax:Vector3) : Vector3
+	{
 		if (x < vmin.x) x = vmin.x; else if (x > vmax.x) x = vmax.x;
 		if (y < vmin.y) y = vmin.y; else if (y > vmax.y) y = vmax.y;
 		if (z < vmin.z) z = vmin.z; else if (z > vmax.z) z = vmax.z;
@@ -249,44 +288,52 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function negate () : Vector3{
+	public function negate () : Vector3
+	{
 		return multiplyScalar(-1);
 	}
 	
 	
-	public function dot (v:Vector3) : Float{
+	public function dot (v:Vector3) : Float
+	{
 		return x * v.x + y * v.y + z * v.z;
 	}
 	
 	
-	public function lengthSq () : Float{
+	public function lengthSq () : Float
+	{
 		return x * x + y * y + z * z;
 	}
 	
 	
-	public function length () : Float{
+	public function length () : Float
+	{
 		return Math.sqrt(x * x + y * y + z * z);
 	}
 	
 	
-	public function lengthManhattan () : Float{
+	public function lengthManhattan () : Float
+	{
 		return Math.abs(x) + Math.abs(y) + Math.abs(z);
 	}
 	
 	
-	public function normalize () : Vector3{
+	public function normalize () : Vector3
+	{
 		return divideScalar(length());
 	}
 	
 	
-	public function setLength (l:Float) : Vector3{
+	public function setLength (l:Float) : Vector3
+	{
 		var oldLength = length();
 		if (oldLength != 0 && l != oldLength) multiplyScalar(l / oldLength);
 		return this;
 	}
 	
 	
-	public function lerp (v:Vector3, alpha:Float) : Vector3{
+	public function lerp (v:Vector3, alpha:Float) : Vector3
+	{
 		x += (v.x - x) * alpha;
 		y += (v.y - y) * alpha;
 		z += (v.z - z) * alpha;
@@ -294,7 +341,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function cross (v:Vector3) : Vector3{
+	public function cross (v:Vector3) : Vector3
+	{
 		x = y * v.z - z * v.y;
 		y = z * v.x - x * v.z;
 		z = x * v.y - y * v.x;
@@ -302,7 +350,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function crossVectors (a:Vector3, b:Vector3) : Vector3{
+	public function crossVectors (a:Vector3, b:Vector3) : Vector3
+	{
 		x = a.y * b.z - a.z * b.y;
 		y = a.z * b.x - a.x * b.z;
 		z = a.x * b.y - a.y * b.x;
@@ -310,14 +359,16 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function angleTo (v:Vector3) : Float{
+	public function angleTo (v:Vector3) : Float
+	{
 		var theta:Float = dot(v) / (length() * v.length());
 		if (theta < -1) theta = -1; else if (theta > 1) theta = 1;
 		return Math.acos(theta);
 	}
 	
 	
-	public function distanceToSquared (v:Vector3) : Float{
+	public function distanceToSquared (v:Vector3) : Float
+	{
 		var dx = x - v.x;
 		var dy = y - v.y;
 		var dz = z - v.z;
@@ -325,12 +376,14 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function distanceTo (v:Vector3) : Float{
+	public function distanceTo (v:Vector3) : Float
+	{
 		return Math.sqrt(distanceToSquared(v));
 	}
 	
 	
-	public function setEulerFromRotationMatrix (m:Matrix4, order:String = 'XYZ') : Vector3{
+	public function setEulerFromRotationMatrix (m:Matrix4, order:String = 'XYZ') : Vector3
+	{
 		var te = m.elements;
 		var m11 = te[0], m12 = te[4], m13 = te[8];
 		var m21 = te[1], m22 = te[5], m23 = te[9];
@@ -355,7 +408,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function setEulerFromQuaternion (q:Quaternion, order:String = 'XYZ') : Vector3{
+	public function setEulerFromQuaternion (q:Quaternion, order:String = 'XYZ') : Vector3
+	{
 		var sqx = q.x * q.x;
 		var sqy = q.y * q.y;
 		var sqz = q.z * q.z;
@@ -364,7 +418,7 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 		if (order == 'XYZ')
 		{
 			x = Math.atan2( 2 * ( q.x * q.w - q.y * q.z ), ( sqw - sqx - sqy + sqz ) );
-			y = Math.asin(  TMath.clamp( 2 * ( q.x * q.z + q.y * q.w ), -1, 1 ) );
+			y = Math.asin(  MathUtils.clamp( 2 * ( q.x * q.z + q.y * q.w ), -1, 1 ) );
 			z = Math.atan2( 2 * ( q.z * q.w - q.x * q.y ), ( sqw + sqx - sqy - sqz ) );			
 		}
 		
@@ -372,7 +426,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function getPositionFromMatrix (m:Matrix4) : Vector3{
+	public function getPositionFromMatrix (m:Matrix4) : Vector3
+	{
 		x = m.elements[12];
 		y = m.elements[13];
 		z = m.elements[14];
@@ -380,7 +435,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function getScaleFromMatrix (m:Matrix4) : Vector3{
+	public function getScaleFromMatrix (m:Matrix4) : Vector3
+	{
 		var e = m.elements;
 		var sx = set(e[0], e[1], e[2]).length();
 		var sy = set(e[4], e[5], e[6]).length();
@@ -392,7 +448,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function getColumnFromMatrix (index:Int, m:Matrix4) : Vector3{
+	public function getColumnFromMatrix (index:Int, m:Matrix4) : Vector3
+	{
 		var offset = index * 4;
 		var e = m.elements;
 		x = e[offset];
@@ -402,12 +459,14 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function equals (v:Vector3) : Bool{
+	public function equals (v:Vector3) : Bool
+	{
 		return ( (x == v.x) && (y == v.y) && (z == v.z) );
 	}
 	
 	
-	public function fromArray (a:Array<Float>) : Vector3{
+	public function fromArray (a:Array<Float>) : Vector3
+	{
 		x = a[0];
 		y = a[1];
 		z = a[2];
@@ -415,7 +474,8 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function toArray () : Array<Float>{
+	public function toArray () : Array<Float>
+	{
 		var a = new Array<Float>();
 		a.push(x);
 		a.push(y);
@@ -424,26 +484,30 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function clone () : Vector3{
+	public function clone () : Vector3
+	{
 		return new Vector3(x, y, z);
 	}
 	
 	
-	public function applyEuler (v:Vector3, order:String = 'XYZ') : Vector3{
-		var q1 = new Quaternion();
-		applyQuaternion(q1.setFromEuler(v, order));
+	public function applyEuler (euler:Euler) : Vector3
+	{
+		var quaternion = new Quaternion();
+		applyQuaternion( quaternion.setFromEuler( euler ) );
 		return this;
 	}
 	
 	
-	public function applyAxisAngle (axis:Vector3, angle:Float) : Vector3{
+	public function applyAxisAngle (axis:Vector3, angle:Float) : Vector3
+	{
 		var q1 = new Quaternion();
 		applyQuaternion(q1.setFromAxisAngle(axis, angle));
 		return this;
 	}
 	
 	
-	public function projectOnVector (v:Vector3) : Vector3{
+	public function projectOnVector (v:Vector3) : Vector3
+	{
 		var v1 = v.clone().normalize();
 		var d = dot(v1);
 		copy(v1).multiplyScalar(d);
@@ -451,13 +515,15 @@ abstract Vector3(Vector3Data) to Vector3Data from Vector3Data
 	}
 	
 	
-	public function projectOnPlane (planeNormal:Vector3) : Vector3{
+	public function projectOnPlane (planeNormal:Vector3) : Vector3
+	{
 		var v1 = clone().projectOnVector(planeNormal);
 		return sub(v1);
 	}
 	
 	
-	public function reflect (v:Vector3) : Vector3{
+	public function reflect (v:Vector3) : Vector3
+	{
 		var v1 = clone().projectOnVector(v).multiplyScalar(2);
 		return subVectors(v1, this);
 	}

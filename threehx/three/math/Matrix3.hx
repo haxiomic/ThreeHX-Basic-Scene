@@ -1,32 +1,31 @@
 //R66
 package three.math;
 
-import three.math.TMath;
-import taurine.math.Mat3;
-
-typedef Matrix3Data = Mat3;
+@:noCompletion
+typedef Matrix3Data = FloatArray;
 
 @:arrayAccess
 abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
-	
 	public function new (
 		n11:Float = 1, n12:Float = 0, n13:Float = 0,
 		n21:Float = 0, n22:Float = 1, n23:Float = 0,
 		n31:Float = 0, n32:Float = 0, n33:Float = 1){
 
-		this = new Matrix3Data();
-
-		this.a00 = n11;
-		this.a01 = n12;
-		this.a02 = n13;
-		this.a10 = n21;
-		this.a11 = n22;
-		this.a12 = n23;
-		this.a20 = n31;
-		this.a21 = n32;
-		this.a22 = n33;
+		this = new Matrix3Data(9);
+		set(n11, n12, n13,
+			n21, n22, n23,
+			n31, n32, n33);
 	}
 
+	public var elements(get,set):Matrix3;//#! access to elements can be phased out, since elements == matrix3
+	private inline function get_elements():Matrix3 return this;
+	private inline function set_elements(v:Matrix3):Matrix3 return this = v;
+
+	public inline function toString() return "Matrix3:\n("+this[0]+", "+this[1]+", "+this[2]+",\n"+
+											           " "+this[3]+", "+this[4]+", "+this[5]+",\n"+
+											           " "+this[6]+", "+this[7]+", "+this[8]+")";
+
+	// three.js methods
 
 	public function set (
 		n11:Float = 1, n12:Float = 0, n13:Float = 0,
@@ -101,8 +100,6 @@ abstract Matrix3(Matrix3Data) to Matrix3Data from Matrix3Data{
 
 
 	public function getInverse (m:Matrix4) : Matrix3{
-		var me = m.elements;
-		var te = elements;
 		this[0] =  m[10] * m[5] - m[6] * m[9];
 		this[1] = -m[10] * m[1] + m[2] * m[9];
 		this[2] =  m[6]  * m[1] - m[2] * m[5];

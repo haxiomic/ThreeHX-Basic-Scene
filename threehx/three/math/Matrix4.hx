@@ -1,11 +1,8 @@
 //R66
 package three.math;
 
-import three.math.TMath;
-import taurine.math.Mat4;
-
-typedef Matrix4Data = Mat4;
-
+@:noCompletion
+typedef Matrix4Data = FloatArray;
 
 @:arrayAccess
 abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
@@ -14,11 +11,9 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 		n11:Float = 1, n12:Float = 0, n13:Float = 0, n14:Float = 0,
 		n21:Float = 0, n22:Float = 1, n23:Float = 0, n24:Float = 0,
 		n31:Float = 0, n32:Float = 0, n33:Float = 1, n34:Float = 0,
-		n41:Float = 0, n42:Float = 0, n43:Float = 0, n44:Float = 1) 
-	{
+		n41:Float = 0, n42:Float = 0, n43:Float = 0, n44:Float = 1){
 
-		this = new Matrix4Data();
-		
+		this = new Matrix4Data(16);
 		set(
 			n11, n12, n13, n14,
 			n21, n22, n23, n24,
@@ -27,6 +22,16 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 		);
 	}
 	
+	public var elements(get,set):Matrix3;//#! access to elements can be phased out, since elements == matrix3
+	private inline function get_elements():Matrix3 return this;
+	private inline function set_elements(v:Matrix3):Matrix3 return this = v;
+
+	public inline function toString() return "Matrix4:\n("+this[0]+", "+this[1]+", "+this[2]+", "+this[3]+",\n"+
+											           " "+this[4]+", "+this[5]+", "+this[6]+", "+this[7]+",\n"+
+											           " "+this[8]+", "+this[9]+", "+this[10]+", "+this[11]+",\n"+
+											           " "+this[12]+", "+this[13]+", "+this[14]+", "+this[15]+")";
+
+	// three.js methods
 	
 	public function set (
 		n11:Float, n12:Float, n13:Float, n14:Float,
@@ -43,8 +48,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function identity () : Matrix4
-	{
+	public function identity () : Matrix4{
 		set(
 			1, 0, 0, 0,
 			0, 1, 0, 0,
@@ -55,8 +59,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function copy (m:Matrix4) : Matrix4
-	{
+	public function copy (m:Matrix4) : Matrix4{
 		var me = m;
 		set(
 			me[0], me[4], me[8], me[12],
@@ -68,14 +71,12 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function extractPosition (m:Matrix4) : Matrix4
-	{
+	public function extractPosition (m:Matrix4) : Matrix4{
 		return copyPosition(m);
 	}
 	
 	
-	public function copyPosition (m:Matrix4) : Matrix4
-	{
+	public function copyPosition (m:Matrix4) : Matrix4{
 		var te = this;
 		var me = m;
 		te[12] = me[12];
@@ -85,8 +86,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function extractRotation (m:Matrix4) : Matrix4
-	{
+	public function extractRotation (m:Matrix4) : Matrix4{
 		var v1 = new Vector3();
 		var te = this;
 		var me = m;
@@ -111,14 +111,12 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function setRotationFromEuler (v:Vector3, order:String = 'XYZ') : Matrix4
-	{
+	public function setRotationFromEuler (v:Vector3, order:String = 'XYZ') : Matrix4{
 		return makeRotationFromEuler(v, order);
 	}
 	
 	
-	public function makeRotationFromEuler (v:Vector3, order:String = 'XYZ') : Matrix4
-	{
+	public function makeRotationFromEuler (v:Vector3, order:String = 'XYZ') : Matrix4{
 		var te = this;
 		var a = Math.cos(v.x), b = Math.sin(v.x);
 		var c = Math.cos(v.y), d = Math.sin(v.y);
@@ -155,14 +153,12 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function setRotationFromQuaternion (q:Quaternion) : Matrix4
-	{
+	public function setRotationFromQuaternion (q:Quaternion) : Matrix4{
 		return makeRotationFromQuaternion(q);
 	}
 	
 	
-	public function makeRotationFromQuaternion (q:Quaternion) : Matrix4
-	{
+	public function makeRotationFromQuaternion (q:Quaternion) : Matrix4{
 		var te = this;
 		var x2 = q.x + q.x, y2 = q.y + q.y, z2 = q.z + q.z;
 		var xx = q.x * x2, xy = q.x * y2, xz = q.x * z2;
@@ -194,8 +190,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function lookAt (eye:Vector3, target:Vector3, up:Vector3) : Matrix4
-	{
+	public function lookAt (eye:Vector3, target:Vector3, up:Vector3) : Matrix4{
 		var x = new Vector3(), y = new Vector3(), z = new Vector3();
 		var te = this;
 		
@@ -219,15 +214,13 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function multiply (m:Matrix4, n:Matrix4 = null) : Matrix4
-	{
+	public function multiply (m:Matrix4, n:Matrix4 = null) : Matrix4{
 		if (n != null) return multiplyMatrices(m, n);
 		return multiplyMatrices(this, m);
 	}
 	
 	
-	public function multiplyMatrices (a:Matrix4, b:Matrix4) : Matrix4
-	{
+	public function multiplyMatrices (a:Matrix4, b:Matrix4) : Matrix4{
 		var ae = a;
 		var be = b;
 		var te = this;
@@ -266,8 +259,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function multiplyToArray (a:Matrix4, b:Matrix4, r:Array<Float>) : Matrix4
-	{
+	public function multiplyToArray (a:Matrix4, b:Matrix4, r:Array<Float>) : Matrix4{
 		var te = this;
 		multiplyMatrices(a, b);
 		r[0] = te[0]; r[1] = te[1]; r[2] = te[2]; r[3] = te[3];
@@ -278,8 +270,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function multiplyScalar (s:Float) : Matrix4
-	{
+	public function multiplyScalar (s:Float) : Matrix4{
 		var te = this;
 		te[0] *= s; te[4] *= s; te[8] *= s; te[12] *= s;
 		te[1] *= s; te[5] *= s; te[9] *= s; te[13] *= s;
@@ -289,20 +280,17 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function multiplyVector3 (v:Vector3) : Vector3
-	{
+	public function multiplyVector3 (v:Vector3) : Vector3{
 		return v.applyProjection(this);
 	}
 	
 	
-	public function multiplyVector4 (v:Vector3) : Vector3
-	{
+	public function multiplyVector4 (v:Vector3) : Vector3{
 		return v.applyMatrix4(this);
 	}
 	
 	
-	public function multiplyVector3Array (a:Array<Float>) : Array<Float>
-	{
+	public function multiplyVector3Array (a:Array<Float>) : Array<Float>{
 		var v1 = new Vector3();
 		var i = 0, il = a.length;
 		while (i < il)
@@ -320,20 +308,17 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function rotateAxis (v:Vector3)
-	{
+	public function rotateAxis (v:Vector3){
 		v.transformDirection(this);
 	}
 	
 	
-	public function crossVector (v:Vector3) : Vector3
-	{
+	public function crossVector (v:Vector3) : Vector3{
 		return v.applyMatrix4(this);
 	}
 	
 	
-	public function determinant () : Float
-	{
+	public function determinant () : Float{
 		var te = this;
 		var n11 = te[0], n12 = te[4], n13 = te[8], n14 = te[12];
 		var n21 = te[1], n22 = te[5], n23 = te[9], n24 = te[13];
@@ -377,8 +362,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function transpose () : Matrix4
-	{
+	public function transpose () : Matrix4{
 		var te = this;
 		var tmp:Float;
 		
@@ -395,8 +379,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function flattenToArray (flat:Array<Float> = null) : Array<Float>
-	{
+	public function flattenToArray (flat:Array<Float> = null) : Array<Float>{
 		if (flat == null) 
 		{
 			flat = new Array<Float>();
@@ -412,8 +395,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function flattenToArrayOffset (flat:Array<Float>, offset:Int) : Array<Float>
-	{
+	public function flattenToArrayOffset (flat:Array<Float>, offset:Int) : Array<Float>{
 		var te = this;
 		flat[ offset ] = te[0];
 		flat[ offset + 1 ] = te[1];
@@ -439,15 +421,13 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function getPosition () : Vector3
-	{
+	public function getPosition () : Vector3{
 		var te = this;
 		return new Vector3(te[12], te[13], te[14]);
 	}
 	
 	
-	public function setPosition (v:Vector3) : Matrix4
-	{
+	public function setPosition (v:Vector3) : Matrix4{
 		var te = this;
 		te[12] = v.x;
 		te[13] = v.y;
@@ -456,8 +436,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function getInverse (m:Matrix4) : Matrix4
-	{
+	public function getInverse (m:Matrix4) : Matrix4{
 		var te = this;
 		var me = m;
 		
@@ -497,8 +476,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function scale (v:Vector3) : Matrix4
-	{
+	public function scale (v:Vector3) : Matrix4{
 		var te = this;
 		var x = v.x, y = v.y, z = v.z;
 		te[0] *= x; te[4] *= y; te[8] *= z;
@@ -510,8 +488,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function getMaxScaleOnAxis () : Float
-	{
+	public function getMaxScaleOnAxis () : Float{
 		var te = this;
 		
 		var scaleXSq = te[0] * te[0] + te[1] * te[1] + te[2] * te[2];
@@ -522,8 +499,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeTranslation (x:Float, y:Float, z:Float) : Matrix4
-	{
+	public function makeTranslation (x:Float, y:Float, z:Float) : Matrix4{
 		set(
 			1, 0, 0, x,
 			0, 1, 0, y,
@@ -534,8 +510,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeRotationX (theta:Float) : Matrix4
-	{
+	public function makeRotationX (theta:Float) : Matrix4{
 		var c =  Math.cos(theta), s = Math.sin(theta);
 		set(
 			1, 0, 0, 0,
@@ -547,8 +522,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeRotationY (theta:Float) : Matrix4
-	{
+	public function makeRotationY (theta:Float) : Matrix4{
 		var c = Math.cos(theta), s = Math.sin(theta);
 		set(
 			c, 0, s, 0,
@@ -560,8 +534,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeRotationZ (theta:Float) : Matrix4
-	{
+	public function makeRotationZ (theta:Float) : Matrix4{
 		var c = Math.cos(theta), s = Math.sin(theta);
 		set(
 			c, -s, 0, 0,
@@ -573,8 +546,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeRotationAxis (axis:Vector3, angle:Float) : Matrix4
-	{
+	public function makeRotationAxis (axis:Vector3, angle:Float) : Matrix4{
 		var c = Math.cos( angle );
 		var s = Math.sin( angle );
 		var t = 1 - c;
@@ -591,8 +563,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeScale (x:Float, y:Float, z:Float) : Matrix4
-	{
+	public function makeScale (x:Float, y:Float, z:Float) : Matrix4{
 		set(
 			x, 0, 0, 0,
 			0, y, 0, 0,
@@ -603,14 +574,12 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function compose (vpos:Vector3, q:Quaternion, vscale:Vector3) : Matrix4
-	{
+	public function compose (vpos:Vector3, q:Quaternion, vscale:Vector3) : Matrix4{
 		return makeFromPositionQuaternionScale(vpos, q, vscale);
 	}
 	
 	
-	public function makeFromPositionQuaternionScale (vpos:Vector3, q:Quaternion, vscale:Vector3) : Matrix4
-	{
+	public function makeFromPositionQuaternionScale (vpos:Vector3, q:Quaternion, vscale:Vector3) : Matrix4{
 		makeRotationFromQuaternion(q);
 		scale(vscale);
 		setPosition(vpos);
@@ -619,8 +588,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	
 	
 	//swapped scale/order arguments for default 'XYZ' order
-	public function makeFromPositionEulerScale (vpos:Vector3, vrot:Vector3, vscale:Vector3, order:String = 'XYZ') : Matrix4
-	{
+	public function makeFromPositionEulerScale (vpos:Vector3, vrot:Vector3, vscale:Vector3, order:String = 'XYZ') : Matrix4{
 		makeRotationFromEuler(vrot, order);
 		scale(vscale);
 		setPosition(vpos);
@@ -628,8 +596,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeFrustum (left:Float, right:Float, bottom:Float, top:Float, near:Float, far:Float) : Matrix4
-	{
+	public function makeFrustum (left:Float, right:Float, bottom:Float, top:Float, near:Float, far:Float) : Matrix4{
 		var te = this;
 		var tx = 2 * near / (right - left);
 		var ty = 2 * near / (top - bottom);
@@ -647,8 +614,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makePerspective (fov:Float, aspect:Float, near:Float, far:Float) : Matrix4
-	{
+	public function makePerspective (fov:Float, aspect:Float, near:Float, far:Float) : Matrix4{
 		var ymax = near * Math.tan( MathUtils.degToRad(fov * 0.5) );
 		var ymin = -ymax;
 		var xmin = ymin * aspect;
@@ -657,8 +623,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function makeOrthographic (left:Float, right:Float, top:Float, bottom:Float, near:Float, far:Float) : Matrix4
-	{
+	public function makeOrthographic (left:Float, right:Float, top:Float, bottom:Float, near:Float, far:Float) : Matrix4{
 		var te = this;
 		var w = right - left;
 		var h = top - bottom;
@@ -677,8 +642,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function clone () : Matrix4
-	{
+	public function clone () : Matrix4{
 		var te = this;
 		return new Matrix4(
 			te[0], te[4], te[8], te[12],
@@ -689,8 +653,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 	
 	
-	public function decompose (position:Vector3 = null, quaternion:Quaternion = null, scale:Vector3 = null) : Array<Dynamic>
-	{
+	public function decompose (position:Vector3 = null, quaternion:Quaternion = null, scale:Vector3 = null) : Array<Dynamic>{
 		var te = this;
 		
 		var ax = new Vector3(te[0], te[1], te[2]);
