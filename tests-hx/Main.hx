@@ -1,8 +1,8 @@
 package;
 
 import three.THREE;
-import three.math.TMath;
-import three.math.Vector2;
+import three.math.*;
+import three.math.*;
 
 class Main{
 
@@ -14,6 +14,9 @@ class Main{
 		var a:Vector2 = new Vector2(5,4);
 		v2.add(a);
 		trace(v2.x);
+
+		var v3:Vector3 = new Vector3(100, 253.5, 231);
+		trace(v3);
 	}
 
 	static public function main(){new Main();}
