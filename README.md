@@ -9,6 +9,10 @@ The current approach is to port just enough to run the most basic scene, this wi
 - Port three.js tests
 
 ###Getting Involved
+Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.git` to clone the repo including three.js  
+
+The current ThreeHX library is in the ./threehx folder and the basic test scene is in ./basic-scene-hx, to build `cd basic-scene-hx` and execute `lime test html5`
+
 Mark todos or other important comments with a '#!' eg `//#! this bit needs finishing`, this makes them searchable later on.
 
 If a file is incomplete, please put what you've done and what needs to be done at the top.
