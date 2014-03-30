@@ -1,6 +1,6 @@
 //R66
 /*
-!# INCOMPLETE: Requires Euler Class
+!# INCOMPLETE: Requires Euler Class and Vector4
 */
 package three.math;
 
@@ -10,7 +10,7 @@ class Quaternoin{
 	}
 
 	private var v4:Vector4;
-	private var quaternion:Quaternion = null;
+	private var euler:Euler = null;
 
 	private inline function get_x():Float return v4.x;
 	private inline function get_y():Float return v4.y;
