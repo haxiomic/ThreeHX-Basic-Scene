@@ -19,10 +19,13 @@ If a file is incomplete, please put what you've done and what needs to be done a
 
 Mark the revision the file was ported from at the top e.g.: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
 
-Other three.js->hx porting projects, be sure to check them out!
+Other three.js->hx porting projects, be sure to check them out!  
 [https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  
 [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX)  
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)
+
+Also three.js->c++, very useful for type information  
+[https://github.com/jdduke/three_cpp](https://github.com/jdduke/three_cpp)
 
 ###Important notes
 - math.Math has become math.TMath to avoid conflict with standard Math lib
