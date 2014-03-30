@@ -25,7 +25,7 @@ Other three.js->hx porting projects, be sure to check them out!
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)
 
 ###Important notes
-- math.Math has become three.math.TMath to avoid conflict with standard Math lib
+- math.Math has become math.TMath to avoid conflict with standard Math lib
 
 ###Files touched in the basic scene, roughly in order
 Excluding the WebGLRenderer dependancies because it accesses everything! If you've got time on your hands, pick one of these to port :) . Not all are actually used, but all are referenced in the basic-scene. 
