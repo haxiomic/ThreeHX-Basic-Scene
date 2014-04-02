@@ -1,14 +1,13 @@
 ##Let's get [three.js](https://github.com/mrdoob/three.js/) ported to Haxe!
 The current approach is to port just enough to run the most basic scene, this will allow us to test design considerations and ensure that the foundations are rock solid for future development. This initial attempt will aim to run a very basic scene in GL, Flash and Canvas, however further development will focus on GL alone
 
-Much of the code is based on eskojones's [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX) which is an excellent port of the base classes
+Much of the code is based on eskojones's [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX) & Vujadin's [https://github.com/vujadin/ThreeHx/](https://github.com/vujadin/ThreeHx/) ports
 
-###Design Considerations
+###Design Decisions
 - In three.js the renderer adds additional fields to objects, in haxe, this means objects have to be predefined with renderer specific fields. These fields should either be stored elsewhere or be define in a general, renderer agonistic manner on the object.
 `Use foo3d as the interface to the renderer?`
 - Easy upgrade path: needs to map well onto threejs codebase
-`functions should be tagged with revision they were ported from`
-- Port three.js tests
+`functions should be tagged with revision they were ported from?`
 
 ###Getting Involved
 Execute `git clone --recursive https://github.com/haxiomic/ThreeHX-Basic-Scene.git` to clone the repo including the three.js submodule
@@ -22,11 +21,13 @@ If a file is incomplete, please put what you've done and what needs to be done a
 Mark the revision the file was ported from at the top e.g.: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
 
 Other three.js->hx porting projects  
+[https://github.com/vujadin/ThreeHx/](https://github.com/vujadin/ThreeHx/)
 [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX)  
 [https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  (Fork of eskojones with more GLRender code)
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)
 
-Also three.js->c++, very useful for type information  
+**Dart & C++ port are, very useful for type information**  
+[https://github.com/threeDart/three.dart](https://github.com/threeDart/three.dart)
 [https://github.com/jdduke/three_cpp](https://github.com/jdduke/three_cpp)
 
 ###Important notes

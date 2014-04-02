@@ -3,5 +3,4 @@ cpp/
 
 internal-notes.txt
 
-#Autotool is incomplete
-/utils/
+/internal-utils/ #rough tools used to make batch file edits or analysis

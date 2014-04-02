@@ -5,9 +5,18 @@
     <app main="Main" path="Export" file="Main" />
 
     <source path="./Source" />
-    <source path="../threehx" />
 
+    <!--<haxelib name="foo3d" />-->
     <haxelib name="lime" />
-    <haxelib name="foo3d" />
+    <!--<haxelib name="openfl" />-->
+    
+    <!-- Main port -->
+    <!-- <source path="../threehx" /> -->
+
+    <!-- Vujadin -->
+    <source path="../threehx-vujadin" />
+
+    
+
 
 </project>

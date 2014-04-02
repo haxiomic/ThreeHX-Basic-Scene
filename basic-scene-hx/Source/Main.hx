@@ -1,7 +1,7 @@
 package;
 
 import three.THREE;
-import three.math.TMath;
+import three.math.MathUtils;
 
 class Main{
 	//var camera:Camera;
@@ -18,6 +18,8 @@ class Main{
 	public function init(){
 		var width = 500;
 		var height = 500;
+
+		var x:lime.gl.GLUniformLocation;
 
 		//camera = new PerspectiveCamera(75, width / height, 1, 10000);
 		//camera.position.z = 1000;
@@ -44,5 +46,7 @@ class Main{
 		//renderer.render(scene, camera);
 	}
 
-	//static public function main(){}
+	static public function main(){
+		new Main();
+	}
 }
