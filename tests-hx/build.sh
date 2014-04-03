@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #terminal colors
 RED_CODE=1
 RED='\033[38;5;'$RED_CODE'm' 
