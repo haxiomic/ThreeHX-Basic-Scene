@@ -65,7 +65,10 @@ class Main{
 		new Main();
 	}
 
-	static var usage = Log.usage;
+	static public function usage(){
+		print("Analyzer\n  Usage : neko analyzer.n <package>.<class>");
+	}
+
 	static var print = Log.print;
 	static var printTitle = Log.printTitle;
 	static var printError = Log.printError;

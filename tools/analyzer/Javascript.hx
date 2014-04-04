@@ -346,7 +346,6 @@ class Javascript
 		return haxe.Json.parse(definitonsData);
 	}
 
-	static var usage = Log.usage;
 	static var print = Log.print;
 	static var printTitle = Log.printTitle;
 	static var printError = Log.printError;

@@ -4,10 +4,6 @@ import Config;
 
 class Log 
 {
-	static public function usage(){
-		print("Analyzer\n  Usage : neko analyzer.n <package>.<class>");
-	}
-
 	static public function print(v:Dynamic){
 		Sys.println(v);
 	}
