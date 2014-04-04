@@ -1,6 +1,6 @@
 Export/
 cpp/
 
+/internal-tools/ 	#rough tools used to make batch file edits or analysis
 internal-notes.txt
 
-/internal-tools/ #rough tools used to make batch file edits or analysis
