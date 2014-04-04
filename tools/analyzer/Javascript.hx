@@ -31,6 +31,9 @@ class Javascript
 	public static function extractDefinitions(classID:String){
 		var className = classID.split('.').pop();
 
+		//Aliases
+		if(className=='THREE')className='';
+
 		//nodejs script to execute
 		var js = '';
 
@@ -137,16 +140,16 @@ class Javascript
 		//Werid classes, THREE.Spline, THREE.Euler
 		var compileDetails = "
 			var className = '"+className+"';
-			var classObj = THREE[className];
+			var classObj = className != '' ? THREE[className] : THREE;
 			var hasConstructor = false;
 
 			if(!isDefined(classObj)){
-				printError('cannot find class THREE.'+className);
+				printError('cannot find class THREE'+className);
 				process.exit(1);
 			};
 
 			var classDefinitions = {};
-			classDefinitions.constructor = null;
+			classDefinitions.constructor = null;//{name, params, code}
 			classDefinitions.staticVariablesPublic = {};//{value, type}
 			classDefinitions.staticFunctionsPublic = {};//{params, code}
 			classDefinitions.staticVariablesPrivate = {};

@@ -33,9 +33,25 @@ class Main{
 			*/
 
 			//For example
+			printTitle('Public Functions');
 			for (field in Reflect.fields(definitions.instanceFunctionsPublic)){
 				print(field+' : '+Reflect.field(definitions.instanceFunctionsPublic, field).params);
-			}
+			}print('\n');
+
+			printTitle('Private Functions');
+			for (field in Reflect.fields(definitions.instanceFunctionsPrivate)){
+				print(field+' : '+Reflect.field(definitions.instanceFunctionsPrivate, field).params);
+			}print('\n');
+
+			printTitle('Static Functions');
+			for (field in Reflect.fields(definitions.staticFunctionsPublic)){
+				print(field+' : '+Reflect.field(definitions.staticFunctionsPublic, field).params);
+			}print('\n');
+
+			printTitle('Static Variables');
+			for (field in Reflect.fields(definitions.staticVariablesPublic)){
+				print(field+' : '+Reflect.field(definitions.staticVariablesPublic, field).type);
+			}print('\n');
 
 		}catch(msg:String){
 
