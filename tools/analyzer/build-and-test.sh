@@ -11,7 +11,7 @@ RESET='\033[m'
 
 if haxe build.hxml; then
 	cd ../
-	neko analyzer.n math.Euler
+	neko analyzer.n renderers.WebGLRenderer
 else
 	echo -e "${RED}${BOLD} -- Build Failed --${RESET}"
 fi

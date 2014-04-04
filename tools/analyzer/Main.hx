@@ -1,10 +1,9 @@
 /* TODO
-- Does not support WebGLRenderer! It's a non-prototype class, everything is encapsulated in a function. Fake environment will be too tough. Need better method
-- extractDefinitions should handle multiple classes
-- extractDefinitions should handle THREE class independently 
+- Issues with WebGLRenderer! Code works but terminal output JSON too large! Limit of 2^16 -> 65536 characters
+- extraceDefinitions() should handle private variables
+- extractDefinitions() should handle multiple classes
+- extractDefinitions() should handle THREE class independently 
 - would be great to extract comments. Maybe a jsDocs tool is best
-
-texture/Texture.js is a combination of the two :[
 */
 
 package;
@@ -23,7 +22,13 @@ class Main{
 
 			var jsFilePath:String = filePathFromClassID(classID);
 			var fileContent = sys.io.File.getContent(jsFilePath);
-			extractDefinitions(classID);
+
+			var definitions = extractDefinitions(classID);
+
+			//For example
+			for (field in Reflect.fields(definitions.instanceFunctionsPublic)){
+				print(field+' : '+Reflect.field(definitions.instanceFunctionsPublic, field).params);
+			}
 
 		}catch(msg:String){
 
@@ -38,7 +43,7 @@ class Main{
 	}
 
 	function print(v:Dynamic){
-		Sys.println(v.toString());
+		Sys.println(v);
 	}
 
 	function printTitle(v:Dynamic){
@@ -46,7 +51,7 @@ class Main{
 	}
 
 	function printError(v:Dynamic){
-		Sys.println(RED+BOLD+"Error"+RESET+": "+v.toString()+RESET);
+		Sys.println(RED+BOLD+"Error"+RESET+": "+v+RESET);
 	}
 
 	//Terminal colors
@@ -80,7 +85,7 @@ class Main{
 	}
 
 	//runs a nodejs process of three.js and extracts the class definitions during runtime
-	public function extractDefinitions(classID:String):Array<String>{
+	public function extractDefinitions(classID:String){
 		var className = classID.split('.').pop();
 
 		//nodejs script to execute
@@ -151,6 +156,20 @@ class Main{
 			    }
 			    return true;
 			}
+
+			function findClosingBrace(string, start){
+				//find closing bracket
+				var offset = start;
+				var unmatchedCurl = 1;
+				while(unmatchedCurl>0 && offset<string.length){
+					var char = string[offset];
+					if(char=='{')unmatchedCurl++;
+					else if(char=='}')unmatchedCurl--;
+					offset++;
+				}
+				var endIndex = offset;
+				return endIndex;
+			}
 		"; 
 		js+=utils;
 
@@ -185,14 +204,15 @@ class Main{
 
 			var classDefinitions = {};
 			classDefinitions.constructor = null;
-			classDefinitions.staticVariablesPublic = [];
-			classDefinitions.staticFunctionsPublic = [];
-			classDefinitions.staticVariablesPrivate = [];
-			classDefinitions.staticFunctionsPrivate = [];
-			classDefinitions.instanceVariablesPublic = [];
-			classDefinitions.instanceFunctionsPublic = [];
-			classDefinitions.instanceVariablesPrivate = [];
-			classDefinitions.instanceFunctionsPrivate = [];
+			classDefinitions.staticVariablesPublic = {};
+			classDefinitions.staticFunctionsPublic = {};
+			classDefinitions.staticVariablesPrivate = {};
+			classDefinitions.staticFunctionsPrivate = {};
+			classDefinitions.instanceVariablesPublic = {};
+			classDefinitions.instanceFunctionsPublic = {};
+			classDefinitions.instanceVariablesPrivate = {};
+			classDefinitions.instanceFunctionsPrivate = {};
+
 
 			//Constructor
 			if(typeof classObj === 'function'){//class has a constructor
@@ -204,25 +224,23 @@ class Main{
 				hasConstructor = true;
 			}
 
+
 			//Static Fields
 			for(var field in classObj){
 				var obj = classObj[field];
-				try{obj = target[field]}catch(e){};		
 
 				if(typeof(obj) !== 'function'){
 					var store = field[0] == '_' ? classDefinitions.staticVariablesPrivate : classDefinitions.staticVariablesPublic;//underscore prefix makes private
-					store.push({
-						name: field,
+					store[field] = {
 						value: isDefined(obj) ? obj.toString() : undefined,
 						type: getType(obj),
-					});
+					};
 				}else{
 					var store = field[0] == '_' ? classDefinitions.staticFunctionsPrivate : classDefinitions.staticFunctionsPublic;//underscore prefix makes private
-					store.push({
-						name: field,
+					store[field] = {
 						params: getParamNames(obj),
 						code: getFunctionBody(obj),
-					});
+					};
 				}
 			}
 
@@ -235,40 +253,89 @@ class Main{
 						if(field=='constructor')continue;//ignore constructor
 						if(typeof(obj) !== 'function'){
 							var store = field[0] == '_' ? classDefinitions.instanceVariablesPrivate : classDefinitions.instanceVariablesPublic;//underscore prefix makes private
-							store.push({
-								name: field,
+							store[field] = {
 								value: isDefined(obj) ? obj.toString() : undefined,
 								type: getType(obj),
-							});
+							};
 						}else{
 							var store = field[0] == '_' ? classDefinitions.instanceFunctionsPrivate : classDefinitions.instanceFunctionsPublic;//underscore prefix makes private
-							store.push({
-								name: field,
+							store[field] = {
 								params: getParamNames(obj),
 								code: getFunctionBody(obj),
-							});
+							};
 						}
 					}
 				}
 
 				function extractConstructorInstanceFields(constructorBody){
-					//public fields defined with 'this.something = value;'
-					var matchThisDot = /this\\.(\\S+)\\s*\\=\\s*([^\\;]+)\\s*\\;/g;
+					//Regex and eval
+					//non-function public fields defined with 'this.something = value;'
+					var matchThisDot = /this\\.(\\S+)\\s*\\=(?!\\s*function)(\\s*[^\\;]+)\\s*\\;/g;
 					var match;
 					while((match = matchThisDot.exec(constructorBody)) != null){
 						var field = match[1];
 						var strValue = match[2];
+						var type = undefined;
+
 						//try and determine type
 						var result;
 						try{
 							eval('result='+strValue);
 						}catch(e){}
+						type = getType(result);
 
-						print(result);
+						//add or update definitions Array
+						var store = classDefinitions.instanceVariablesPublic;
+						var lastType = isDefined(store[field]) ? store[field].type : undefined;
+						var lastValue = isDefined(store[field]) ? store[field].value : undefined;
+						store[field] = {
+							value: isDefined(lastType) ? lastValue : strValue,
+							type: isDefined(lastType) ? lastType : type,
+						}	
 					}
-				}
 
-				extractConstructorInstanceFields(classDefinitions.constructor.code);
+					//public function fields defined with 'this.something = function (){};'
+					var matchThisFn = /this\\.(\\S+)\\s*\\=\\s*function\\s*\\((.*)\\)\\s*\\{/g;
+					var match;
+					while((match = matchThisFn.exec(constructorBody)) != null){
+						var field = match[1];
+						//find closing brace
+						var startIndex = match.index;
+						var endIndex = findClosingBrace(constructorBody, startIndex + match[0].length);
+						var fnStr = constructorBody.substring(startIndex, endIndex);
+
+						//save
+						var store = classDefinitions.instanceFunctionsPublic;
+						store[field] = {
+							params: getParamNames(fnStr),
+							code: getFunctionBody(fnStr),
+						};
+					}
+
+					//private function fields, defined with 'function x(){...}'
+					var matchPrivateFn = /(this\\.x\\s*\\=\\s*)?(?:function)\\s+(\\S+)\\s*\\((.*)\\)\\s*\\{/g
+					var match;
+					while((match = matchPrivateFn.exec(constructorBody)) != null){
+						//if it's a this. = field, ignore
+						if(getType(match[1]) == 'string'){
+							if(match[1].match('this')!=null)continue;
+						}
+
+						var field = match[2];
+						//find closing brace
+						var startIndex = match.index;
+						var endIndex = findClosingBrace(constructorBody, startIndex + match[0].length);
+						var fnStr = constructorBody.substring(startIndex, endIndex);
+
+						//save
+						var store = classDefinitions.instanceFunctionsPrivate;
+						store[field] = {
+							params: getParamNames(fnStr),
+							code: getFunctionBody(fnStr),
+						};
+					}
+
+				}
 
 				//Instance Fields
 				//there are multiple ways of going about this.
@@ -290,10 +357,19 @@ class Main{
 					// 	process.exit(1);
 					// }
 				}
-				
+
+				//From constructor, duplicates will overwrite if the new version has better typing information
+				extractConstructorInstanceFields(classDefinitions.constructor.code);	
 			}
 
-			print(JSON.stringify(classDefinitions));
+			var output = JSON.stringify(classDefinitions);
+			if(output.length>=65536){
+				var outPath = './out.json';
+				fs.writeFileSync(outPath, output, {encoding:'utf-8'});
+				print('FILE:'+outPath);
+			}else{
+				print(output);
+			}
 		";
 		js+=compileDetails;
 
@@ -305,11 +381,23 @@ class Main{
 			throw "nodejs couldn't evaluate javascript\n"+p.stderr.readAll().toString();
 			return null;
 		}
-
-		print(p.stdout.readAll().toString());
+		
+		var result = p.stdout.readAll().toString();
 		p.close();
 
-		return null;
+		var definitonsData = '';
+
+		if(StringTools.startsWith(result, "FILE:")){
+			var r : EReg = ~/^FILE:(.*)$/i;
+			r.match(result);
+			var definitionsPath = r.matched(1);
+			definitonsData = sys.io.File.getContent(definitionsPath);
+			sys.FileSystem.deleteFile(definitionsPath);
+		}else{
+			definitonsData = StringTools.trim(result); 
+		}
+
+		return haxe.Json.parse(definitonsData);
 	}
 
 	static public function main(){

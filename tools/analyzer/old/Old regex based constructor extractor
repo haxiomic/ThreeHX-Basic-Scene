@@ -1,0 +1,36 @@
+//public fields defined with 'this.something = value;'
+var matchThisDot = /this\\.(\\S+)\\s*\\=\\s*([^\\;]+)\\s*\\;/g;
+var match;
+while((match = matchThisDot.exec(constructorBody)) != null){
+	var field = match[1];
+	var strValue = match[2];
+	var type = undefined;
+
+	//try and determine type
+	var result;
+	try{
+		eval('result='+strValue);
+	}catch(e){}
+	type = getType(result);
+	//function type fix: ! regex needs to select complete function
+	//if(strValue.substring(0, 'function'.length) === 'function') type = 'function';
+
+	print(type+' : '+strValue+' : '+result);
+
+	//add or update definitions Array
+	if(type !== 'function'){
+		var store = classDefinitions.instanceVariablesPublic;
+		var lastType = isDefined(store[field]) ? store[field].type : undefined;
+		var lastValue = isDefined(store[field]) ? store[field].value : undefined;
+		store[field] = {
+			value: isDefined(lastType) ? lastValue : strValue,
+			type: isDefined(lastType) ? lastType : type,
+		}
+	}else{
+		var store = classDefinitions.instanceFunctionsPublic;
+		store[field] = {
+			params: getParamNames(obj),
+			code: getFunctionBody(obj),
+		};
+	}
+}
