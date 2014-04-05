@@ -18,10 +18,10 @@ Mark todos or other important comments with a '!#' e.g. `//!# this bit needs fin
 
 If a file is incomplete, please put what you've done and what needs to be done at the top.
 
-Mark the revision the file was ported from at the top e.g.: `//R66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
+Mark the revision the file was ported from at the top e.g.: `//r66`, if a function is added from a different revision, add comment above it marking the revision - this should make updating much easier
 
 Other three.js->hx porting projects  
-[https://github.com/vujadin/ThreeHx/](https://github.com/vujadin/ThreeHx/)
+[https://github.com/vujadin/ThreeHx/](https://github.com/vujadin/ThreeHx/)  
 [https://github.com/eskojones/ThreeHX](https://github.com/eskojones/ThreeHX)  
 [https://github.com/haxiomic/ThreeHX](https://github.com/haxiomic/ThreeHX)  (Fork of eskojones with more GLRender code)
 [https://github.com/seacloud9/ThreeHX](https://github.com/seacloud9/ThreeHX)

@@ -1,4 +1,6 @@
 /* TODO
+- Instead of fancy runtime javascript analysis, just use typescript definitions!
+
 - Should search for class names rather than explicit
 - Issues with WebGLRenderer! Code works but terminal output JSON too large! Limit of 2^16 -> 65536 characters
 - extraceDefinitions() should handle private variables
