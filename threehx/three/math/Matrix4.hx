@@ -838,7 +838,7 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	
 	public function clone () : Matrix4
 	{
-		var te = elements;
+		var te = this;
 		return new Matrix4(
 			te[0], te[4], te[8], te[12],
 			te[1], te[5], te[9], te[13],
