@@ -24,9 +24,9 @@ abstract Matrix4(Matrix4Data) to Matrix4Data from Matrix4Data{
 	}
 
 
-	public var elements(get,set):Matrix3;//#! access to elements can be phased out, since elements == matrix3
-	private inline function get_elements():Matrix3 return this;
-	private inline function set_elements(v:Matrix3):Matrix3 return this = v;
+	public var elements(get,set):Matrix4;//#! access to elements can be phased out, since elements == matrix3
+	private inline function get_elements():Matrix4 return this;
+	private inline function set_elements(v:Matrix4):Matrix4 return this = v;
 
 	public inline function toString() return "Matrix4:\n("+this[0]+", "+this[1]+", "+this[2]+", "+this[3]+",\n"+
 											           " "+this[4]+", "+this[5]+", "+this[6]+", "+this[7]+",\n"+
