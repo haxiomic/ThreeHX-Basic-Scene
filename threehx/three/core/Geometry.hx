@@ -13,9 +13,9 @@ import three.math.Vector4;
 import three.THREE;
 import three.renderers.WebGLRenderer;
 import haxe.ds.StringMap;
-import openfl.gl.GLBuffer;
-import openfl.utils.Float32Array;
-import openfl.utils.Int16Array;
+import lime.gl.GLBuffer;
+import lime.utils.Float32Array;
+import lime.utils.Int16Array;
 
 /**
  * @author mrdoob / http://mrdoob.com/
