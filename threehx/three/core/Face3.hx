@@ -9,8 +9,10 @@ import three.math.Vector4;
  * @author mrdoob / http://mrdoob.com/
  * @author alteredq / http://alteredqualia.com/
  */
-
-
+/**
+ * ...
+ * @haxeport Krtolica Vujadin - GameStudioHx.com
+ */
  
 class Face3 {
 	
@@ -42,10 +44,10 @@ class Face3 {
 		this.c = c;
 		
 		this.normal = Std.is(normal, Vector3) ? normal : new Vector3();
-		this.vertexNormals = (normal != null && !Std.is(normal, Vector3)) ? normal : [];		// TODO - check for better solution
+		this.vertexNormals = (normal != null && !Std.is(normal, Vector3)) ? normal : [];		//!# TODO - check for better solution
 
 		this.color = Std.is(color, Color) ? color : new Color();
-		this.vertexColors = (color != null && !Std.is(color, Color)) ? color : [];				// TODO - check for better solution
+		this.vertexColors = (color != null && !Std.is(color, Color)) ? color : [];				//!# TODO - check for better solution
 
 		this.vertexTangents = [];
 
