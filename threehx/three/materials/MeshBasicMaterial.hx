@@ -48,31 +48,24 @@ import three.THREE;
 class MeshBasicMaterial extends Material {
 	
 	public var color:Color;
-	
 	public var map:Texture;
-	
 	public var lightMap:Texture; 
-	
 	public var specularMap:Texture;
-	
 	public var envMap:Texture;
 	public var combine:Int;
 	public var reflectivity:Float = 1.0;
 	public var refractionRatio:Float = 0.98;
-	
 	public var fog:Bool = true;
-	
-	//public var shading:Int;
-	
-	//public var wireframe:Bool;
+	//!# todo check
+	public var shading:Int;
+	public var wireframe:Bool;
 	public var wireframeLinewidth:Float;
 	public var wireframeLinecap:String;
 	public var wireframeLinejoin:String;
-	
-	//public var vertexColors:Int;
-	
+	//!# todo check
+	public var vertexColors:Int;
 	public var skinning:Bool = false;
-	//public var morphTargets:Bool = false;
+	public var morphTargets:Bool = false;
 
 	
 	public function new(parameters:Dynamic = null) {
