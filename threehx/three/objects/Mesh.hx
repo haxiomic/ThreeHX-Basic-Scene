@@ -1,4 +1,4 @@
-
+//r66
 package three.objects;
 
 import three.core.Geometry;
@@ -6,13 +6,13 @@ import three.core.Object3D;
 import three.materials.Material;
 import three.materials.MeshBasicMaterial;
 import three.THREE;
-import openfl.utils.Float32Array;
-
-/* 
- * 
- * @author dcm
+import lime.utils.Float32Array;
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author alteredq / http://alteredqualia.com/
+ * @author mikael emtinger / http://gomo.se/
+ * @author jonobr1 / http://jonobr1.com/
  */
-
 class Mesh extends Object3D {
 	
 	//public var geometry:Geometry;

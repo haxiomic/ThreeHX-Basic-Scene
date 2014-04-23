@@ -79,7 +79,7 @@ class Scene extends Object3D {
 		for (key in object.children.keys()) {
 			__addObject(object.children.get(key));
 		}
-		//!# todo events
+		//!# todo event communication 
 	}	
 	
 	public function __removeObject(object:Object3D) {		
